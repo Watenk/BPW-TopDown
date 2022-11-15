@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
         //Inputs
         horizontalInput = Input.GetAxis("Horizontal");
 
-        if (Input.GetKeyDown("space") && touchingGround == true)
+        if (Input.GetKeyDown("w") && touchingGround == true)
         {
             jump = true;
             touchingGround = false;
