@@ -7,23 +7,18 @@ public class Player : MonoBehaviour
     public GameObject playerPSD;
 
     public float speed;
-    public float slowdown;
-    public float jumpForce;
-    public float jumpAccelerationTime;
+    public float rotationSpeed;
 
     private Rigidbody2D rb;
     private Animator animator;
 
     //Controls-----------
-    //Movement
+    //Rotation
     private bool lookingLeft;
-    private bool aKey;
-    private bool dKey;
+    private bool rotateDone;
+    private float currentDegrees;
+    private int rotationTimer;
 
-    //Jump
-    public bool touchingGround = false;
-    private bool wKey;
-    private float jumpAccelerationTimer;
     //--------------------
 
     public void Awake()
@@ -32,57 +27,34 @@ public class Player : MonoBehaviour
         animator = playerPSD.GetComponent<Animator>();
     }
 
-    public void Update()
-    {
-        //Inputs
-        if (Input.GetKey("a")) { aKey = true; }
-        else { aKey = false; }
-
-        if (Input.GetKey("d")) { dKey = true; }
-        else { dKey = false; }
-
-        if (Input.GetKeyDown("w") && touchingGround == true)
-        {
-            wKey = true;
-            touchingGround = false;
-            jumpAccelerationTimer = jumpAccelerationTime;
-        }
-    }
-
     public void FixedUpdate()
     {
         //Movement
-        if (aKey == true)
+
+        if (Input.GetKey("w"))
         {
-            rb.velocity = transform.right * -1 * speed;
-            if (lookingLeft == false)
-            {
-                playerPSD.gameObject.transform.Rotate(0f, 180f, 0f);
-                lookingLeft = true;
-            }
+            rb.AddForce(transform.up * speed);
         }
 
-        if (dKey == true)
+        if (Input.GetKey("d"))
         {
-            rb.velocity = transform.right * speed;
-            if (lookingLeft == true)
-            {
-                playerPSD.gameObject.transform.Rotate(0f, 180f, 0f);
-                lookingLeft = false;
-            }
+            rb.AddForce(transform.right * speed);
+            RotatePlayer(0);
         }
 
-        //Jump
-        if (wKey == true)
+        if (Input.GetKey("a"))
         {
-            rb.AddForce(transform.up * (jumpForce * 10) * jumpAccelerationTimer);
+            rb.AddForce(transform.right * -1 * speed);
+            RotatePlayer(180);
+        }
 
-            jumpAccelerationTimer -= 1;
-            if (jumpAccelerationTimer < 1) { wKey = false; }
+        if (Input.GetKey("s"))
+        {
+            rb.AddForce(transform.up * -1 * speed);
         }
 
         //Animation
-        if (aKey || dKey == true)
+        if (Input.GetKey("w") || Input.GetKey("d") || Input.GetKey("s") || Input.GetKey("a") == true)
         {
             animator.SetBool("isRunning", true);
         }
@@ -90,5 +62,20 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("isRunning", false);
         }
+    }
+
+    private void RotatePlayer(float targetDegrees) 
+    {
+        if (currentDegrees < targetDegrees)
+        {
+            currentDegrees += rotationSpeed;
+        }
+
+        if (currentDegrees > targetDegrees)
+        {
+            currentDegrees -= rotationSpeed;
+        }
+
+        playerPSD.gameObject.transform.rotation = Quaternion.Euler(0, currentDegrees, 0);
     }
 }
