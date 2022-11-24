@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    Attack Attack;
+    Player Player;
+
+    private void Awake()
+    {
+        Attack = FindObjectOfType<Attack>();
+        Player = FindObjectOfType<Player>();
+
+        Attack.OnAwake();
+        Player.OnAwake();
+    }
+
     void Start()
     {
 
@@ -12,5 +24,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void FixedUpdate()
+    {
+        Player.OnFixedUpdate();
     }
 }
