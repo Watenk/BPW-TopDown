@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    Attack Attack;
     Player Player;
+    PlayerStateManager PlayerStateManager;
 
     private void Awake()
     {
-        Attack = FindObjectOfType<Attack>();
+        //References
         Player = FindObjectOfType<Player>();
+        PlayerStateManager = FindObjectOfType<PlayerStateManager>();
 
-        Attack.OnAwake();
+        //Awake
         Player.OnAwake();
     }
 
     void Start()
     {
-
+        PlayerStateManager.OnStart();
     }
 
     void Update()
     {
-        
+        PlayerStateManager.OnUpdate();
     }
 
     private void FixedUpdate()

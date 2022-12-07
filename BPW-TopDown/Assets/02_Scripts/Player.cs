@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameObject playerPSD;
-    public Attack Attack;
 
     public float speed;
     public float rotationSpeed;
@@ -26,7 +25,6 @@ public class Player : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = playerPSD.GetComponent<Animator>();
-        Attack = FindObjectOfType<Attack>();
     }
 
     public void OnFixedUpdate()
@@ -56,10 +54,10 @@ public class Player : MonoBehaviour
         }
 
         //Attack
-        if (Input.GetMouseButtonDown(0) && Attack.TargetInRange)
-        {
-            Attack.DamageEnemy();
-        }
+        //if (Input.GetMouseButtonDown(0) && Attack.TargetInRange)
+        //{
+        //    Attack.DamageEnemy();
+        //}
 
         //Animation
         if (Input.GetKey("w") || Input.GetKey("d") || Input.GetKey("s") || Input.GetKey("a") == true)
