@@ -5,13 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     Player Player;
-    PlayerStateManager PlayerStateManager;
 
     private void Awake()
     {
         //References
         Player = FindObjectOfType<Player>();
-        PlayerStateManager = FindObjectOfType<PlayerStateManager>();
 
         //Awake
         Player.OnAwake();
@@ -19,12 +17,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        PlayerStateManager.OnStart();
+        Player.OnStart();
     }
 
     void Update()
     {
-        PlayerStateManager.OnUpdate();
+        Player.OnUpdate();
     }
 
     private void FixedUpdate()

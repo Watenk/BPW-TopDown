@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -9,6 +10,8 @@ public class Player : MonoBehaviour
     public float speed;
     public float rotationSpeed;
 
+    private FSM MovementFSM;
+    private FSM AttackFSM;
     private Rigidbody2D rb;
     private Animator animator;
 
@@ -27,10 +30,23 @@ public class Player : MonoBehaviour
         animator = playerPSD.GetComponent<Animator>();
     }
 
+    public void OnStart()
+    {
+        MovementFSM = new FSM(GetComponents<BaseState>());
+        MovementFSM.SwitchState("Player (PlayerIdleState)");
+        AttackFSM = new FSM(GetComponents<BaseState>());
+        AttackFSM.SwitchState("Player (PlayerDefaultAttackState)");
+    }
+
+    public void OnUpdate()
+    {
+        MovementFSM.OnUpdate();
+        AttackFSM.OnUpdate();
+    }
+
     public void OnFixedUpdate()
     {
         //Movement
-
         if (Input.GetKey("w"))
         {
             rb.AddForce(transform.up * speed);
@@ -52,12 +68,6 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(transform.up * -1 * speed);
         }
-
-        //Attack
-        //if (Input.GetMouseButtonDown(0) && Attack.TargetInRange)
-        //{
-        //    Attack.DamageEnemy();
-        //}
 
         //Animation
         if (Input.GetKey("w") || Input.GetKey("d") || Input.GetKey("s") || Input.GetKey("a") == true)
