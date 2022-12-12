@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FSM
 {
-    Dictionary<string, BaseState> StatesDictionary = new Dictionary<string, BaseState>(); // Dictionary for States - String is the key
+    Dictionary<System.Type, BaseState> StatesDictionary = new Dictionary<System.Type, BaseState>(); // Dictionary for States - String is the key
     public BaseState currentState;
 
     public FSM(params BaseState[] states)
@@ -12,10 +12,10 @@ public class FSM
         foreach(BaseState state in states)
         {
             state.SetOwner(this);
-            StatesDictionary.Add(state.ToString(), state); //Add BaseState array to stateDictionary
+            StatesDictionary.Add(state.GetType(), state); 
         }
     }
-    public void SwitchState(string newState)
+    public void SwitchState(System.Type newState)
     {
         currentState?.OnExit();
         currentState = StatesDictionary[newState];

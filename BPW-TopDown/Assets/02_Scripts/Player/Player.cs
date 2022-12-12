@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
     public float speed;
     public float rotationSpeed;
 
-    private FSM MovementFSM;
-    private FSM AttackFSM;
+    private FSM movementFSM;
+    private FSM attackFSM;
     private Rigidbody2D rb;
     private Animator animator;
 
@@ -32,16 +32,17 @@ public class Player : MonoBehaviour
 
     public void OnStart()
     {
-        MovementFSM = new FSM(GetComponents<BaseState>());
-        MovementFSM.SwitchState("Player (PlayerIdleState)");
-        AttackFSM = new FSM(GetComponents<BaseState>());
-        AttackFSM.SwitchState("Player (PlayerDefaultAttackState)");
+        movementFSM = new FSM(GetComponents<BaseState>());
+        movementFSM.SwitchState(typeof(PlayerIdleState));
+
+        attackFSM = new FSM(GetComponents<BaseState>());
+        attackFSM.SwitchState(typeof(PlayerDefaultAttackState));
     }
 
     public void OnUpdate()
     {
-        MovementFSM.OnUpdate();
-        AttackFSM.OnUpdate();
+        movementFSM.OnUpdate();
+        attackFSM.OnUpdate();
     }
 
     public void OnFixedUpdate()

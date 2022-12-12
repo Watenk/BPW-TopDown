@@ -1,10 +1,9 @@
+using Mono.Cecil;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy 
+public class Bat : Enemy
 {
-    public float CurrentHealth;
-    public float MaxHealth;
 
 }
