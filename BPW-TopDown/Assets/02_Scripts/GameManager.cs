@@ -1,39 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    Player Player;
-    Bat Bat;
+    private Player Player;
+    private Enemy[] enemys;
 
-    EnemyPatrolState EnemyPatrolState;
+    private EnemyPatrolState[] enemyPatrolStates;
+    private EnemyAttackState[] enemyAttackStates;
 
     private void Awake()
     {
         //References
         Player = FindObjectOfType<Player>();
-        Bat = FindObjectOfType<Bat>();
+        enemys = FindObjectsOfType<Enemy>();
 
-        EnemyPatrolState = FindObjectOfType<EnemyPatrolState>();
+        enemyPatrolStates = FindObjectsOfType<EnemyPatrolState>();
+        enemyAttackStates = FindObjectsOfType<EnemyAttackState>();
 
         //Awake
         Player.OnAwake();
-        Bat.OnAwake();
+        foreach (Enemy enemy in enemys) { enemy.OnAwake(); }
 
-        EnemyPatrolState.OnAwake();
+        foreach (EnemyPatrolState enemyPatrolState in enemyPatrolStates) { enemyPatrolState.OnAwake(); }
+        foreach (EnemyAttackState enemyAttackState in enemyAttackStates) { enemyAttackState.OnAwake(); }
     }
 
     void Start()
     {
         Player.OnStart();
-        Bat.OnStart();
+        foreach (Enemy enemy in enemys) { enemy.OnStart(); }
     }
 
     void Update()
     {
         Player.OnUpdate();
-        Bat.OnUpdate();
+        foreach (Enemy enemy in enemys) { enemy.OnUpdate(); }
     }
 
     private void FixedUpdate()

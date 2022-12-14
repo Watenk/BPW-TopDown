@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class EnemyIdleState : BaseState
 {
+    public int IdleTimer;
+
+    private float idleTimer;
+
     public override void OnEnter()
     {
-        owner.SwitchState(typeof(EnemyPatrolState));
+
     }
 
     public override void OnUpdate()
     {
+        //Enemy idles for IdleTimer Amount
+        idleTimer += 1 * Time.deltaTime;
 
+        if (idleTimer >= IdleTimer)
+        {
+            idleTimer= 0;
+            owner.SwitchState(typeof(EnemyPatrolState));
+        }
     }
 
     public override void OnExit()

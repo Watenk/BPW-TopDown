@@ -9,27 +9,22 @@ public abstract class Enemy : MonoBehaviour
     public float MaxHealth;
     public float AttackDamage;
     public float AttackSpeed;
-    public float MovementSpeed;
 
-    private FSM attackFSM;
-    private NavMeshAgent agent;
+    protected FSM attackFSM;
 
     public virtual void OnAwake()
     {
         attackFSM = new FSM(GetComponents<BaseState>());
-        agent = GetComponent<NavMeshAgent>();
     }
 
     public virtual void OnStart()
     {
         attackFSM.SwitchState(typeof(EnemyIdleState));
-
-        agent.speed = MovementSpeed;
     }
 
     public virtual void OnUpdate()
     {
-
+        attackFSM.OnUpdate();
     }
 
     public virtual void TakeDamage()

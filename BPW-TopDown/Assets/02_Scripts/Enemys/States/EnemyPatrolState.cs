@@ -6,25 +6,40 @@ using UnityEngine.AI;
 public class EnemyPatrolState : BaseState
 {
     public GameObject[] points;
+    public float MovementSpeed;
+    public float TargetStopDistance;
 
-    private NavMeshAgent agent;
-    private int targetAmount;
-    private GameObject target;
+    private GameObject currentTarget;
+    private int totalTargets;
+    private int currentTargetIndex;
 
     public void OnAwake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        totalTargets = points.Length;
     }
 
     public override void OnEnter()
     {
-        targetAmount = points.Length;
-        Debug.Log(targetAmount);
+        currentTarget = points[currentTargetIndex];
     }
 
     public override void OnUpdate()
     {
+        //Patrol between points
+        if (Vector2.Distance(transform.position, currentTarget.transform.position)  >= TargetStopDistance)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, currentTarget.transform.position, MovementSpeed * Time.deltaTime);
+        }
+        else
+        {
+            currentTargetIndex += 1;
+            if (currentTargetIndex == totalTargets)
+            {
+                currentTargetIndex = 0;
+            }
 
+            owner.SwitchState(typeof(EnemyIdleState));
+        }
     }
 
     public override void OnExit()
