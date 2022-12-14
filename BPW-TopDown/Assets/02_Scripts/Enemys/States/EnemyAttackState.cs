@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyAttackState : BaseState
 {
-    private GameObject player;
     public float MovementSpeed;
     public float TargetStopDistance;
 
+    private GameObject player;
     public void OnAwake()
     {
         player = FindObjectOfType<Player>().gameObject;

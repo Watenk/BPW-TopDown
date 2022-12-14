@@ -9,6 +9,7 @@ public class Bat : Enemy
     public float rotationSpeed;
     public float raycastDistance;
     public float AttackTime;
+    public bool DebugLines;
 
     private float attackTime;
 
@@ -33,6 +34,11 @@ public class Bat : Enemy
         if (attackTime <= 0 && attackFSM.currentState.GetType() == typeof(EnemyAttackState)) 
         {
             attackFSM.SwitchState(typeof(EnemyIdleState));
+        }
+
+        if (DebugLines && hit.collider != null)
+        {
+            Debug.DrawLine(raycastObject.gameObject.transform.position, hit.transform.position, Color.red, 10);
         }
     }
 }
