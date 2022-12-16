@@ -6,43 +6,34 @@ using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
-    private Player Player;
-    private Enemy[] enemys;
-
-    private EnemyPatrolState[] enemyPatrolStates;
-    private EnemyAttackState[] enemyAttackStates;
+    private Alive[] alives;
+    private BaseState[] baseStates;
 
     private void Awake()
     {
         //References
-        Player = FindObjectOfType<Player>();
-        enemys = FindObjectsOfType<Enemy>();
-
-        enemyPatrolStates = FindObjectsOfType<EnemyPatrolState>();
-        enemyAttackStates = FindObjectsOfType<EnemyAttackState>();
+        alives = FindObjectsOfType<Alive>();
+        baseStates = FindObjectsOfType<BaseState>();
 
         //Awake
-        Player.OnAwake();
-        foreach (Enemy enemy in enemys) { enemy.OnAwake(); }
-
-        foreach (EnemyPatrolState enemyPatrolState in enemyPatrolStates) { enemyPatrolState.OnAwake(); }
-        foreach (EnemyAttackState enemyAttackState in enemyAttackStates) { enemyAttackState.OnAwake(); }
+        foreach (Alive alive in alives) { alive.OnAwake(); }
+        foreach (BaseState baseState in baseStates) { baseState.OnAwake(); }
     }
 
     void Start()
     {
-        Player.OnStart();
-        foreach (Enemy enemy in enemys) { enemy.OnStart(); }
+        foreach (Alive alive in alives) { alive.OnStart(); }
+        foreach (BaseState baseState in baseStates) { baseState.OnStart(); }
     }
 
     void Update()
     {
-        Player.OnUpdate();
-        foreach (Enemy enemy in enemys) { enemy.OnUpdate(); }
+        foreach (Alive alive in alives) { alive.OnUpdate(); }
+        foreach (BaseState baseState in baseStates) { baseState.OnUpdate(); }
     }
 
     private void FixedUpdate()
     {
-        Player.OnFixedUpdate();
+        foreach (Alive alive in alives) { alive.OnFixedUpdate(); }
     }
 }

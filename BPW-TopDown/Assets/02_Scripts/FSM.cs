@@ -19,7 +19,7 @@ public class FSM
     {
         currentState?.OnExit();
         currentState = StatesDictionary[newState];
-        currentState?.OnEnter();
+        currentState?.OnStart();
     }
 
     public void OnUpdate()
@@ -40,8 +40,11 @@ public abstract class BaseState : MonoBehaviour
     {
         this.owner = owner;
     }
+    public virtual void OnAwake()
+    {
 
-    public abstract void OnEnter();
+    }
+    public abstract void OnStart();
     public abstract void OnUpdate();
     public abstract void OnExit();
 }

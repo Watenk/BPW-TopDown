@@ -8,12 +8,12 @@ public class EnemyAttackState : BaseState
     public float TargetStopDistance;
 
     private GameObject player;
-    public void OnAwake()
+    public override void OnAwake()
     {
         player = FindObjectOfType<Player>().gameObject;
     }
 
-    public override void OnEnter()
+    public override void OnStart()
     {
 
     }

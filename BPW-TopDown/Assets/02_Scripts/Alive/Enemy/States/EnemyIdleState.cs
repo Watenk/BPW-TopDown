@@ -8,7 +8,7 @@ public class EnemyIdleState : BaseState
 
     private float idleTimer;
 
-    public override void OnEnter()
+    public override void OnStart()
     {
 
     }

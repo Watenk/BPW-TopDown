@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerRunningState : BaseState
 {
-    public override void OnEnter()
+    public override void OnStart()
     {
 
     }

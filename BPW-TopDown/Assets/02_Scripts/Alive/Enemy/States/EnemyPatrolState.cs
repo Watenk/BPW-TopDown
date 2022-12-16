@@ -13,12 +13,12 @@ public class EnemyPatrolState : BaseState
     private int totalTargets;
     private int currentTargetIndex;
 
-    public void OnAwake()
+    public override void OnAwake()
     {
         totalTargets = points.Length;
     }
 
-    public override void OnEnter()
+    public override void OnStart()
     {
         currentTarget = points[currentTargetIndex];
     }
