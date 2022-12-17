@@ -40,34 +40,30 @@ public class Player : Alive
         base.OnUpdate();
         movementFSM.OnUpdate();
         actionFSM.OnUpdate();
-    }
 
-    public override void OnFixedUpdate()
-    {
-        base.OnFixedUpdate();
         RotatePlayer();
 
         //Movement
         if (Input.GetKey("w"))
         {
-            rb.AddForce(transform.up * Speed);
+            rb.AddForce(transform.up * Speed * Time.deltaTime * 100);
         }
 
         if (Input.GetKey("d"))
         {
-            rb.AddForce(transform.right * Speed);
+            rb.AddForce(transform.right * Speed * Time.deltaTime * 100);
             rotation = 0;
         }
 
         if (Input.GetKey("a"))
         {
-            rb.AddForce(transform.right * -1 * Speed);
+            rb.AddForce(transform.right * -1 * Speed * Time.deltaTime * 100);
             rotation = 180;
         }
 
         if (Input.GetKey("s"))
         {
-            rb.AddForce(transform.up * -1 * Speed);
+            rb.AddForce(transform.up * -1 * Speed * Time.deltaTime * 100);
         }
 
         //Animation
@@ -85,12 +81,12 @@ public class Player : Alive
     {
         if (currentRotation < rotation)
         {
-            currentRotation += rotationSpeed;
+            currentRotation += rotationSpeed * Time.deltaTime * 100;
         }
 
         if (currentRotation > rotation)
         {
-            currentRotation -= rotationSpeed;
+            currentRotation -= rotationSpeed * Time.deltaTime * 100;
         }
 
         playerPSD.gameObject.transform.rotation = Quaternion.Euler(0, currentRotation, 0);
