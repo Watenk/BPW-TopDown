@@ -23,13 +23,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         foreach (Alive alive in alives) { alive.OnStart(); }
-        foreach (BaseState baseState in baseStates) { baseState.OnStart(); }
     }
 
     void Update()
     {
         foreach (Alive alive in alives) { alive.OnUpdate(); }
-        foreach (BaseState baseState in baseStates) { baseState.OnUpdate(); }
     }
 
     private void FixedUpdate()

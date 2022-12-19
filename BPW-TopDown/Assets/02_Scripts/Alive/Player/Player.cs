@@ -32,7 +32,7 @@ public class Player : Alive
         movementFSM.SwitchState(typeof(PlayerIdleState));
 
         actionFSM = new FSM(GetComponents<BaseState>());
-        actionFSM.SwitchState(typeof(PlayerDefaultAttackState));
+        actionFSM.SwitchState(typeof(PlayerAttackState));
     }
 
     public override void OnUpdate()
@@ -43,7 +43,7 @@ public class Player : Alive
 
         RotatePlayer();
 
-        //Movement
+        //Inputs
         if (Input.GetKey("w"))
         {
             rb.AddForce(transform.up * Speed * Time.deltaTime * 100);
@@ -64,6 +64,16 @@ public class Player : Alive
         if (Input.GetKey("s"))
         {
             rb.AddForce(transform.up * -1 * Speed * Time.deltaTime * 100);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            actionFSM.SwitchState(typeof(PlayerAttackState));
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            actionFSM.SwitchState(typeof(PlayerShootState));
         }
 
         //Animation

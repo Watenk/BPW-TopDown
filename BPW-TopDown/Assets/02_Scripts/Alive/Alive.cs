@@ -37,6 +37,6 @@ public abstract class Alive : MonoBehaviour, IDamagable, IKillable
 
     public void Kill()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

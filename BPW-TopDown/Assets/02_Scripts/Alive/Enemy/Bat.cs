@@ -1,5 +1,3 @@
-using Mono.Cecil;
-using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +5,31 @@ using UnityEngine;
 public class Bat : Enemy
 {
     public GameObject raycastObject;
+    public LineRenderer line;
     public float raycastRotationSpeed;
     public float raycastDistance;
+
+    public override void OnAwake()
+    {
+        base.OnAwake();
+
+        line = GetComponent<LineRenderer>();
+    }
+
+    public override void OnStart()
+    {
+        base.OnStart();
+
+        line.startColor = Color.red;
+        line.endColor = Color.red;
+    }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
+
+        line.SetPosition(0, raycastObject.transform.position);
+        line.SetPosition(1, raycastObject.transform.position + raycastObject.transform.right * raycastDistance);
 
         //Raycast Detection
         raycastObject.transform.Rotate(Vector3.forward * raycastRotationSpeed * Time.deltaTime);
@@ -24,6 +41,8 @@ public class Bat : Enemy
             {
                 attackFSM.SwitchState(typeof(EnemyAttackState));
             }
+            
+            Debug.DrawLine(transform.position, hit.point, Color.green);
         }
     }
 }
