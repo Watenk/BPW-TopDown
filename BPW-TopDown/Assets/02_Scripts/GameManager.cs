@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,12 +18,12 @@ public class GameManager : MonoBehaviour
         foreach (BaseState baseState in baseStates) { baseState.OnAwake(); }
     }
 
-    void Start()
+    private void Start()
     {
         foreach (Alive alive in alives) { alive.OnStart(); }
     }
 
-    void Update()
+    private void Update()
     {
         foreach (Alive alive in alives) { alive.OnUpdate(); }
     }

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class PlayerShootState : BaseState
@@ -9,9 +8,12 @@ public class PlayerShootState : BaseState
     public GameObject BulletSpawn;
     public float ShootCooldown;
     public float ShootSpeed;
+    public float SuperAttackBulletAmount;
+    public float SuperAttackCooldown;
 
     private GameObject player;
     private float shootCooldownTimer;
+    private float superAttackTimer;
 
     public override void OnAwake()
     {
@@ -44,7 +46,24 @@ public class PlayerShootState : BaseState
             shootCooldownTimer = ShootCooldown;
         }
 
-        shootCooldownTimer -= Time.deltaTime;
+        if (shootCooldownTimer >= 0) { shootCooldownTimer -= Time.deltaTime; }
+
+        if (Input.GetKeyDown("q") && superAttackTimer <= 0)
+        {
+            Quaternion bulletRotation;
+            float iRotation = 360 / SuperAttackBulletAmount;
+            float currentRotation = 0;
+
+            for (int i = 0; i < SuperAttackBulletAmount; i++)
+            {
+                currentRotation += iRotation;
+                bulletRotation = Quaternion.Euler(new Vector3(0f, 0f, currentRotation));
+                GameObject currentBullet = Instantiate(Bullet, BulletSpawn.transform.position, bulletRotation);
+                currentBullet.GetComponent<Rigidbody2D>().velocity = currentBullet.transform.up * ShootSpeed;
+            }
+        }
+
+        if (superAttackTimer >= 0) { superAttackTimer -= Time.deltaTime; }
     }
 
     public override void OnExit()

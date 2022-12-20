@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -2735772702208194282}
   m_Layer: 0
   m_Name: Tree
-  m_TagString: Untagged
+  m_TagString: Collidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,4 +141,4 @@ MonoBehaviour:
   - {x: -0.8621526, y: -11.965054, z: 0}
   m_ShapePathHash: 888736266
   m_Mesh: {fileID: 0}
-  m_InstanceId: 42966
+  m_InstanceId: 55434
