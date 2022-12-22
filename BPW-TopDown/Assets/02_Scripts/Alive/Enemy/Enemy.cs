@@ -7,6 +7,8 @@ public abstract class Enemy : Alive
 {
     protected FSM attackFSM;
 
+    protected bool disable;
+
     public override void OnAwake()
     {
         base.OnAwake();
@@ -22,6 +24,6 @@ public abstract class Enemy : Alive
     public override void OnUpdate()
     {
         base.OnUpdate();
-        attackFSM.OnUpdate();
+        if (!disable) { attackFSM.OnUpdate(); }
     }
 }

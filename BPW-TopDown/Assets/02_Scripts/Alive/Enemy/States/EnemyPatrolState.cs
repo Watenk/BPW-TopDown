@@ -11,7 +11,6 @@ public class EnemyPatrolState : BaseState
 
     private GameObject currentTarget;
     private int totalTargets;
-    private int currentTargetIndex;
 
     public override void OnAwake()
     {
@@ -20,7 +19,7 @@ public class EnemyPatrolState : BaseState
 
     public override void OnStart()
     {
-        currentTarget = points[currentTargetIndex];
+        currentTarget = points[Random.Range(0, totalTargets)];
     }
 
     public override void OnUpdate()
@@ -32,11 +31,7 @@ public class EnemyPatrolState : BaseState
         }
         else
         {
-            currentTargetIndex += 1;
-            if (currentTargetIndex == totalTargets)
-            {
-                currentTargetIndex = 0;
-            }
+            currentTarget = points[Random.Range(0, totalTargets)];
 
             owner.SwitchState(typeof(EnemyIdleState));
         }

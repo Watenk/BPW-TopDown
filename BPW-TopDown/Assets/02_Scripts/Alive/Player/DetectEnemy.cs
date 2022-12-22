@@ -13,4 +13,12 @@ public class DetectEnemy : MonoBehaviour
             Target = other.gameObject;
         }
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Target = null;
+        }
+    }
 }

@@ -4,36 +4,45 @@ using UnityEngine;
 
 public class Bat : Enemy
 {
-    public GameObject raycastObject;
-    public LineRenderer line;
-    public float raycastRotationSpeed;
-    public float raycastDistance;
+    public GameObject RaycastObject;
+    public GameObject LineObject;
+    public Color LineColor;
+    public float RaycastRotationSpeed;
+    public float RaycastDistance;
+    public float AttackedStun;
+
+    private LineRenderer line;
+    private bool isAttacked;
+    private float attackedStunTimer;
+    private float raycastRotationSpeed;
 
     public override void OnAwake()
     {
         base.OnAwake();
 
-        line = GetComponent<LineRenderer>();
+        line = LineObject.GetComponent<LineRenderer>();
     }
 
     public override void OnStart()
     {
         base.OnStart();
 
-        line.startColor = Color.red;
-        line.endColor = Color.red;
+        line.startColor = LineColor;
+        line.endColor = LineColor;
+
+        raycastRotationSpeed = Random.Range(RaycastRotationSpeed - 2, RaycastRotationSpeed + 2);
     }
 
     public override void OnUpdate()
     {
         base.OnUpdate();
 
-        line.SetPosition(0, raycastObject.transform.position);
-        line.SetPosition(1, raycastObject.transform.position + raycastObject.transform.right * raycastDistance);
+        line.SetPosition(0, RaycastObject.transform.position);
+        line.SetPosition(1, RaycastObject.transform.position + RaycastObject.transform.right * RaycastDistance);
 
         //Raycast Detection
-        raycastObject.transform.Rotate(Vector3.forward * raycastRotationSpeed * Time.deltaTime);
-        RaycastHit2D hit = Physics2D.Raycast(raycastObject.transform.position, raycastObject.transform.right, raycastDistance);
+        RaycastObject.transform.Rotate(Vector3.forward * raycastRotationSpeed * Time.deltaTime);
+        RaycastHit2D hit = Physics2D.Raycast(RaycastObject.transform.position, RaycastObject.transform.right, RaycastDistance);
 
         if (hit.collider != null)
         {
@@ -44,5 +53,31 @@ public class Bat : Enemy
             
             Debug.DrawLine(transform.position, hit.point, Color.green);
         }
+
+        if (attackedStunTimer >= 0 && attackFSM.currentState.GetType() != typeof(EnemyIdleState))
+        {
+            attackFSM.SwitchState(typeof(EnemyIdleState));
+        }
+
+        if (attackedStunTimer <= 0 && isAttacked == true && attackFSM.currentState.GetType() != typeof(EnemyAttackState))
+        {
+            attackFSM.SwitchState(typeof(EnemyAttackState));
+        }
+
+        if (attackedStunTimer >= 0) { attackedStunTimer -= Time.deltaTime; }
+    }
+
+    public override void TakeDamage(float _damage)
+    {
+        base.TakeDamage(_damage);
+
+        isAttacked = true;
+        attackedStunTimer = AttackedStun;
+    }
+
+    public override void Kill()
+    {
+        disable = true;
+        base.Kill();
     }
 }

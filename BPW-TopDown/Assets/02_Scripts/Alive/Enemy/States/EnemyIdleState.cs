@@ -6,11 +6,12 @@ public class EnemyIdleState : BaseState
 {
     public int IdleTimer;
 
+    private GameObject enemy;
     private float idleTimer;
 
     public override void OnStart()
     {
-
+        enemy = this.gameObject;
     }
 
     public override void OnUpdate()
@@ -20,7 +21,8 @@ public class EnemyIdleState : BaseState
 
         if (idleTimer >= IdleTimer)
         {
-            idleTimer= 0;
+            idleTimer = 0;
+
             owner.SwitchState(typeof(EnemyPatrolState));
         }
     }

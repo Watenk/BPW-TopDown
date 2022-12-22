@@ -9,6 +9,7 @@ public abstract class Alive : MonoBehaviour, IDamagable, IKillable
     public float MaxHealth;
     public float Speed;
     public float Knockback;
+    public GameObject DieParticle;
 
     public virtual void OnAwake()
     {
@@ -30,14 +31,15 @@ public abstract class Alive : MonoBehaviour, IDamagable, IKillable
 
     }
 
-    public void TakeDamage(float _damage)
+    public virtual void TakeDamage(float _damage)
     {
         Health -= _damage;
         if (Health <= 0) { Kill (); }
     }
 
-    public void Kill()
+    public virtual void Kill()
     {
+        Instantiate(DieParticle, gameObject.transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }
 

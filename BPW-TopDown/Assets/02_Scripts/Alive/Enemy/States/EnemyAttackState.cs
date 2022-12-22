@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyAttackState : BaseState
 {
+    public GameObject EnemyAttackParticle;
     public float Damage;
     public float AttackCooldown;
     public float MovementSpeed;
@@ -27,6 +28,7 @@ public class EnemyAttackState : BaseState
         {
             if (attackCooldownTimer <= 0) 
             {
+                Instantiate(EnemyAttackParticle, gameObject.transform.position, Quaternion.identity);
                 player.TakeDamage(Damage);
                 attackCooldownTimer = AttackCooldown;
             }
