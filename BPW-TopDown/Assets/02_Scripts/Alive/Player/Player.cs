@@ -36,7 +36,7 @@ public class Player : Alive
         movementFSM.SwitchState(typeof(PlayerIdleState));
 
         actionFSM = new FSM(GetComponents<BaseState>());
-        actionFSM.SwitchState(typeof(PlayerAttackState));
+        actionFSM.SwitchState(typeof(PlayerMeleeState));
     }
 
     public override void OnUpdate()
@@ -72,7 +72,7 @@ public class Player : Alive
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            actionFSM.SwitchState(typeof(PlayerAttackState));
+            actionFSM.SwitchState(typeof(PlayerMeleeState));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))

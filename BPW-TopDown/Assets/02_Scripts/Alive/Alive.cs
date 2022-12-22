@@ -8,6 +8,7 @@ public abstract class Alive : MonoBehaviour, IDamagable, IKillable
     public float Health;
     public float MaxHealth;
     public float Speed;
+    public float Knockback;
 
     public virtual void OnAwake()
     {
@@ -38,5 +39,17 @@ public abstract class Alive : MonoBehaviour, IDamagable, IKillable
     public void Kill()
     {
         gameObject.SetActive(false);
+    }
+
+    public void TakeKnockback(GameObject object1, GameObject object2)
+    {
+        Vector2 distanceObject1Vector = object1.transform.position - object2.transform.position;
+        Vector2 distanceObject1 = distanceObject1Vector.normalized * Knockback;
+
+        Vector2 distanceObject2Vector = object2.transform.position - object1.transform.position;
+        Vector2 distanceObject2 = distanceObject2Vector.normalized * Knockback;
+
+        object1.GetComponent<Rigidbody2D>().AddForce(distanceObject1, ForceMode2D.Impulse);
+        object2.GetComponent<Rigidbody2D>().AddForce(distanceObject2, ForceMode2D.Impulse);
     }
 }

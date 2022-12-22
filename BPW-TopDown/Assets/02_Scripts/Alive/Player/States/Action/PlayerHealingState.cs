@@ -7,7 +7,7 @@ public class PlayerHealingState : BaseState
     public override void OnStart()
     {
         //Heal some hp points
-        owner.SwitchState(typeof(PlayerAttackState));
+        owner.SwitchState(typeof(PlayerMeleeState));
     }
 
     public override void OnUpdate()

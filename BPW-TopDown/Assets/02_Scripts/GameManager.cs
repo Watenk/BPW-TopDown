@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private CameraFollowMouse cameraFollowMouse;
+
     private Alive[] alives;
     private BaseState[] baseStates;
 
     private void Awake()
     {
         //References
+        cameraFollowMouse = FindObjectOfType<CameraFollowMouse>();
+
         alives = FindObjectsOfType<Alive>();
         baseStates = FindObjectsOfType<BaseState>();
 
@@ -25,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        cameraFollowMouse.OnUpdate();
         foreach (Alive alive in alives) { alive.OnUpdate(); }
     }
 
