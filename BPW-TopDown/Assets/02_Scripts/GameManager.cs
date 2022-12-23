@@ -20,22 +20,22 @@ public class GameManager : MonoBehaviour
         baseStates = FindObjectsOfType<BaseState>();
 
         //Awake
-        UI.OnAwake();
         foreach (Alive alive in alives) { alive.OnAwake(); }
         foreach (BaseState baseState in baseStates) { baseState.OnAwake(); }
+        UI.OnAwake();
     }
 
     private void Start()
     {
-        UI.OnStart();
         foreach (Alive alive in alives) { alive.OnStart(); }
+        UI.OnStart();
     }
 
     private void Update()
     {
         cameraFollowMouse.OnUpdate();
-        UI.OnUpdate();
         foreach (Alive alive in alives) { alive.OnUpdate(); }
+        UI.OnUpdate();
     }
 
     private void FixedUpdate()

@@ -37,22 +37,9 @@ public class Bat : Enemy
     {
         base.OnUpdate();
 
-        line.SetPosition(0, RaycastObject.transform.position);
-        line.SetPosition(1, RaycastObject.transform.position + RaycastObject.transform.right * RaycastDistance);
-
-        //Raycast Detection
-        RaycastObject.transform.Rotate(Vector3.forward * raycastRotationSpeed * Time.deltaTime);
-        RaycastHit2D hit = Physics2D.Raycast(RaycastObject.transform.position, RaycastObject.transform.right, RaycastDistance);
-
-        if (hit.collider != null)
-        {
-            if (hit.transform.CompareTag("Player") && attackFSM.currentState.GetType() != typeof(EnemyAttackState))
-            {
-                attackFSM.SwitchState(typeof(EnemyAttackState));
-            }
-            
-            Debug.DrawLine(transform.position, hit.point, Color.green);
-        }
+        DrawLine();
+        RayCast();
+        UpdateTimers();
 
         if (attackedStunTimer >= 0 && attackFSM.currentState.GetType() != typeof(EnemyIdleState))
         {
@@ -63,8 +50,6 @@ public class Bat : Enemy
         {
             attackFSM.SwitchState(typeof(EnemyAttackState));
         }
-
-        if (attackedStunTimer >= 0) { attackedStunTimer -= Time.deltaTime; }
     }
 
     public override void TakeDamage(float _damage)
@@ -79,5 +64,32 @@ public class Bat : Enemy
     {
         disable = true;
         base.Kill();
+    }
+
+    private void DrawLine()
+    {
+        line.SetPosition(0, RaycastObject.transform.position);
+        line.SetPosition(1, RaycastObject.transform.position + RaycastObject.transform.right * RaycastDistance);
+    }
+
+    private void RayCast()
+    {
+        RaycastObject.transform.Rotate(Vector3.forward * raycastRotationSpeed * Time.deltaTime);
+        RaycastHit2D hit = Physics2D.Raycast(RaycastObject.transform.position, RaycastObject.transform.right, RaycastDistance);
+
+        if (hit.collider != null)
+        {
+            if (hit.transform.CompareTag("Player") && attackFSM.currentState.GetType() != typeof(EnemyAttackState))
+            {
+                attackFSM.SwitchState(typeof(EnemyAttackState));
+            }
+
+            Debug.DrawLine(transform.position, hit.point, Color.green);
+        }
+    }
+
+    private void UpdateTimers()
+    {
+        if (attackedStunTimer >= 0) { attackedStunTimer -= Time.deltaTime; }
     }
 }

@@ -116,7 +116,7 @@ MonoBehaviour:
   Damage: 5
   AttackCooldown: 2
   MovementSpeed: 20
-  TargetStopDistance: 7
+  TargetStopDistance: 15
 --- !u!114 &2777669709891165650
 MonoBehaviour:
   m_ObjectHideFlags: 0

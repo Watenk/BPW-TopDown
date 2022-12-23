@@ -9,9 +9,10 @@ public class PlayerMeleeState : BaseState
     public GameObject SuperMeleeParticle;
     public float AttackDamage;
     public float SuperAttackDamage;
+    public float SuperAttackCost;
     public float AttackCooldown;
 
-    private GameObject player;
+    private Player player;
     private float attackCooldownTimer;
     private DetectEnemy DetectEnemy;
 
@@ -19,51 +20,66 @@ public class PlayerMeleeState : BaseState
     {
         base.OnAwake();
 
-        player = FindObjectOfType<Player>().gameObject;
+        player = FindObjectOfType<Player>();
         DetectEnemy = MeleeCollider.GetComponent<DetectEnemy>();
     }
 
     public override void OnStart()
     {
-
     }
 
     public override void OnUpdate()
     {
+        UpdateTimers();
+
         if (Input.GetMouseButtonDown(0) && attackCooldownTimer <= 0)
         {
-            if (DetectEnemy.Targets.Count >= 1)
-            {
-                for (int i = 0; i < DetectEnemy.Targets.Count; i++)
-                {
-                    player.GetComponent<Player>().TakeKnockback(player, DetectEnemy.Targets[i]);
-                    DetectEnemy.Targets[i].GetComponent<Enemy>().TakeDamage(AttackDamage);
-                }
-            }
-
-            Instantiate(MeleeParticle, gameObject.transform.position, Quaternion.identity);
-            attackCooldownTimer = AttackCooldown;
+            Attack();
         }
 
-        if (Input.GetKeyDown("q"))
+        if (Input.GetKeyDown("q") && player.DoIHaveEnoughMana(SuperAttackCost))
         {
-            if (DetectEnemy.Targets.Count >= 1)
-            {
-                for (int i = 0; i < DetectEnemy.Targets.Count; i++)
-                {
-                    player.GetComponent<Player>().TakeKnockback(player, DetectEnemy.Targets[i]);
-                    DetectEnemy.Targets[i].GetComponent<Enemy>().TakeDamage(SuperAttackDamage);
-                }
-            }
-
-            Instantiate(SuperMeleeParticle, gameObject.transform.position, Quaternion.identity);
+            SuperAttack();
         }
-
-        if (attackCooldownTimer >= 0) { attackCooldownTimer -= Time.deltaTime; }
     }
 
     public override void OnExit()
     {
+    }
 
+    private void Attack()
+    {
+        if (DetectEnemy.Targets.Count >= 1)
+        {
+            for (int i = 0; i < DetectEnemy.Targets.Count; i++)
+            {
+                player.TakeKnockback(player.gameObject, DetectEnemy.Targets[i]);
+                DetectEnemy.Targets[i].GetComponent<Enemy>().TakeDamage(AttackDamage);
+            }
+        }
+
+        Instantiate(MeleeParticle, gameObject.transform.position, Quaternion.identity);
+        attackCooldownTimer = AttackCooldown;
+    }
+
+    private void SuperAttack()
+    {
+        player.RemoveMana(SuperAttackCost);
+
+        if (DetectEnemy.Targets.Count >= 1)
+        {
+            for (int i = 0; i < DetectEnemy.Targets.Count; i++)
+            {
+                player.TakeKnockback(player.gameObject, DetectEnemy.Targets[i]);
+                DetectEnemy.Targets[i].GetComponent<Enemy>().TakeDamage(SuperAttackDamage);
+            }
+        }
+
+        Instantiate(SuperMeleeParticle, gameObject.transform.position, Quaternion.identity);
+    }
+
+    private void UpdateTimers()
+    {
+        if (attackCooldownTimer >= 0) { attackCooldownTimer -= Time.deltaTime; }
     }
 }

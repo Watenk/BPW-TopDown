@@ -19,6 +19,7 @@ public class BulletTrigger : MonoBehaviour
         {
             other.gameObject.GetComponent<Enemy>().TakeDamage(Damage);
             other.gameObject.GetComponent<Enemy>().TakeKnockback(gameObject, other.gameObject);
+            Instantiate(BulletParticle, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

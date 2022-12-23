@@ -34,13 +34,13 @@ public abstract class Enemy : Alive
 
     public override void Kill()
     {
-        if (Random.Range(1, 10) <= HeartDropChance / 10)
+        if (Random.Range(0, 10) <= HeartDropChance / 10)
         {
             Vector2 randomVector = new Vector2(gameObject.transform.position.x + Random.Range(-DropOffset, DropOffset), gameObject.transform.position.y + Random.Range(-DropOffset, DropOffset));
             Instantiate(Heart, randomVector, Quaternion.identity);
         }
 
-        if (Random.Range(1, 10) <= ManaDropChance / 10)
+        if (Random.Range(0, 10) <= ManaDropChance / 10)
         {
             Vector2 randomVector = new Vector2(gameObject.transform.position.x + Random.Range(-DropOffset, DropOffset), gameObject.transform.position.y + Random.Range(-DropOffset, DropOffset));
             Instantiate(Mana, randomVector, Quaternion.identity);

@@ -36,7 +36,7 @@ public class Oscar : Enemy
             attackFSM.SwitchState(typeof(EnemyIdleState));
         }
 
-        if (attackedStunTimer >= 0 ) { attackedStunTimer -= Time.deltaTime; }
+        UpdateTimers();
     }
 
     public override void TakeDamage(float _damage)
@@ -44,5 +44,10 @@ public class Oscar : Enemy
         base.TakeDamage(_damage);
 
         attackedStunTimer = AttackedStun;
+    }
+
+    private void UpdateTimers()
+    {
+        if (attackedStunTimer >= 0) { attackedStunTimer -= Time.deltaTime; }
     }
 }

@@ -14,7 +14,7 @@ public class ManaTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             Player player = other.gameObject.GetComponent<Player>();
-            player.Mana += ManaAmount;
+            player.AddMana(ManaAmount);
 
             uiUpdateMana();
 

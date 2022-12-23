@@ -6,17 +6,14 @@ public class EnemyIdleState : BaseState
 {
     public int IdleTimer;
 
-    private GameObject enemy;
     private float idleTimer;
 
     public override void OnStart()
     {
-        enemy = this.gameObject;
     }
 
     public override void OnUpdate()
     {
-        //Enemy idles for IdleTimer Amount
         idleTimer += 1 * Time.deltaTime;
 
         if (idleTimer >= IdleTimer)
@@ -29,6 +26,5 @@ public class EnemyIdleState : BaseState
 
     public override void OnExit()
     {
-
     }
 }
