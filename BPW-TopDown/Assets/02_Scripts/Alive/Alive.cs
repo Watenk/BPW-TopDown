@@ -9,11 +9,14 @@ public abstract class Alive : MonoBehaviour, IDamagable, IKillable
     public float MaxHealth;
     public float Speed;
     public float Knockback;
+    public int KillScore;
     public GameObject DieParticle;
+
+    protected GameManager gameManager;
 
     public virtual void OnAwake()
     {
-
+        gameManager= FindObjectOfType<GameManager>();
     }
 
     public virtual void OnStart()
@@ -39,6 +42,7 @@ public abstract class Alive : MonoBehaviour, IDamagable, IKillable
 
     public virtual void Kill()
     {
+        gameManager.AddScore(KillScore);
         Instantiate(DieParticle, gameObject.transform.position, Quaternion.identity);
         gameObject.SetActive(false);
     }

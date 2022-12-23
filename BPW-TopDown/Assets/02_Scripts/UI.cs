@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,19 @@ public class UI : MonoBehaviour
     public Slider HealthSlider;
     public Slider ManaSlider;
     public GameObject NotEnoughManaText;
+    public GameObject scoreGameObject;
     public float NotEnoughManaTime;
 
     private Player player;
+    private GameManager gameManager;
+    private TextMeshProUGUI score;
     private float NotEnoughManaTimer;
 
     public void OnAwake()
     {
         player = FindObjectOfType<Player>();
+        gameManager = FindObjectOfType<GameManager>();
+        score = scoreGameObject.GetComponent<TextMeshProUGUI>();
     }
 
     public void OnStart()
@@ -54,5 +60,10 @@ public class UI : MonoBehaviour
     {
         NotEnoughManaText.SetActive(true);
         NotEnoughManaTimer = NotEnoughManaTime;
+    }
+
+    public void UpdateScore()
+    {
+        score.text = gameManager.score.ToString();
     }
 }

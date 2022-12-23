@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public int score;
+
     private CameraFollowMouse cameraFollowMouse;
     private UI UI;
 
@@ -41,5 +43,11 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         foreach (Alive alive in alives) { alive.OnFixedUpdate(); }
+    }
+
+    public void AddScore(int _amount)
+    {
+        score += _amount;
+        UI.UpdateScore();
     }
 }

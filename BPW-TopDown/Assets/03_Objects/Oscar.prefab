@@ -56,6 +56,7 @@ MonoBehaviour:
   MaxHealth: 60
   Speed: 0
   Knockback: 10
+  KillScore: 50
   DieParticle: {fileID: 5938922850245226367, guid: 4c13326e4c9a795428735e8a1825cb24, type: 3}
   Heart: {fileID: 1824636810155935567, guid: 454a69c0c94c46c47bdda8d6200dde74, type: 3}
   Mana: {fileID: 6701926572131721692, guid: 35e7e3be94193f5419773be5b11ca7b0, type: 3}

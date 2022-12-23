@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : Alive
 {
@@ -117,6 +118,11 @@ public class Player : Alive
     private void updateTimers()
     {
         if (dashCooldownTimer >= 0) { dashCooldownTimer -= Time.deltaTime; }
+    }
+
+    public override void Kill()
+    {
+        SceneManager.LoadScene("Main");
     }
 
     public override void TakeDamage(float _damage)

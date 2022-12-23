@@ -10,7 +10,7 @@ public abstract class Enemy : Alive
     public int HeartDropChance;
     public int ManaDropChance;
     public int DropOffset;
-    protected FSM attackFSM;
+    public FSM attackFSM;
 
     protected bool disable;
 
