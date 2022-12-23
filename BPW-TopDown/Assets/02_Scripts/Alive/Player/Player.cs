@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class Player : Alive
 {
+    public delegate void UIUpdateHealth();
+    public static event UIUpdateHealth uiUpdateHealth;
     public GameObject playerPSD;
     public GameObject DashDirection;
     public float DashSpeed;
     public float DashCooldown;
+    public float Mana;
 
     private FSM movementFSM;
     private FSM actionFSM;
@@ -115,6 +118,13 @@ public class Player : Alive
         {
             animator.SetBool("isRunning", false);
         }
+    }
+
+    public override void TakeDamage(float _damage)
+    {
+        base.TakeDamage(_damage);
+
+        uiUpdateHealth();
     }
 
     private void RotatePlayer() 

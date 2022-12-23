@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3745a3cbd424fd741ad9859eab155e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Damage: 5
   BulletParticle: {fileID: 7603093271372175740, guid: 314b98e5ee6726f4ebbda2c1cad99f52, type: 3}
 --- !u!61 &6794396843550647867
 BoxCollider2D:

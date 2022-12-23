@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class DetectEnemy : MonoBehaviour
 {
-    public GameObject Target;
+    public List<GameObject> Targets;
+
+    private void Awake()
+    {
+        Targets = new List<GameObject>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Target = other.gameObject;
+            Targets.Add(other.gameObject);
         }
     }
 
@@ -18,7 +23,7 @@ public class DetectEnemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Target = null;
+            Targets.Remove(other.gameObject);
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAttackState : BaseState
 {
     public GameObject EnemyAttackParticle;
+    public float AttackDelay;
     public float Damage;
     public float AttackCooldown;
     public float MovementSpeed;
@@ -12,6 +13,7 @@ public class EnemyAttackState : BaseState
 
     private Player player;
     private float attackCooldownTimer;
+    private float attackDelayTimer;
 
     public override void OnAwake()
     {
@@ -20,27 +22,33 @@ public class EnemyAttackState : BaseState
 
     public override void OnStart()
     {
+        attackDelayTimer = AttackDelay;
     }
 
     public override void OnUpdate()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) <= TargetStopDistance)
+        if (attackDelayTimer >= 0) { attackDelayTimer -= Time.deltaTime; }
+
+        if (attackDelayTimer <= 0)
         {
-            if (attackCooldownTimer <= 0) 
+            if (Vector2.Distance(transform.position, player.transform.position) <= TargetStopDistance)
             {
-                Instantiate(EnemyAttackParticle, gameObject.transform.position, Quaternion.identity);
-                player.TakeDamage(Damage);
-                attackCooldownTimer = AttackCooldown;
+                if (attackCooldownTimer <= 0) 
+                {
+                    Instantiate(EnemyAttackParticle, gameObject.transform.position, Quaternion.identity);
+                    player.TakeDamage(Damage);
+                    attackCooldownTimer = AttackCooldown;
+                }
+
+                if (attackCooldownTimer >= 0) { attackCooldownTimer -= Time.deltaTime; }
+            }
+            else
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, MovementSpeed * Time.deltaTime);
             }
 
             if (attackCooldownTimer >= 0) { attackCooldownTimer -= Time.deltaTime; }
         }
-        else
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, MovementSpeed * Time.deltaTime);
-        }
-
-        if (attackCooldownTimer >= 0) { attackCooldownTimer -= Time.deltaTime; }
     }
 
     public override void OnExit()
